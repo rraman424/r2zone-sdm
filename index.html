@@ -8,12 +8,14 @@
         (function() {
             // Get the exact sub-path the user was trying to access (e.g., "/sdm_installer.zip")
             var requestedPath = window.location.pathname;
-
+console.log(requestedPath);
             // Define your true destination hosting url
             var targetBaseUrl = "http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM";
 
             // Forcefully redirect them to the file on your temporary server
             window.location.href = targetBaseUrl + requestedPath + window.location.search + window.location.hash;
+console.log(targetBaseUrl + requestedPath + window.location.search + window.location.hash);
+        
         })();
     </script>
 </head>
