@@ -7,20 +7,27 @@
 
     <script>
         (function() {
-            // Get the current domain name the user typed
-            var currentHost = window.location.hostname.toLowerCase();
+            // 1. Get the exact path, query parameters, or file name the user requested
+            // For example: "/sdm_installer.zip"
+            var requestedPath = window.location.pathname;
             
-            // Get any extra path paths (e.g., /about or /login) to pass along
-            var currentPath = window.location.pathname + window.location.search + window.location.hash;
-       
-                window.location.href = "http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/" + currentPath;
-            
+            // Clean up the path if it's just the root homepage
+            if (requestedPath === "/" || requestedPath === "/index.html") {
+                requestedPath = "";
+            }
+
+            // 2. Define your temporary hosting base destination
+            var targetBaseUrl = "http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM";
+
+            // 3. Combine them perfectly and redirect
+            // This turns sdm.r2zone.in/sdm_installer.zip into http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/sdm_installer.zip
+            window.location.href = targetBaseUrl + requestedPath + window.location.search + window.location.hash;
         })();
     </script>
 </head>
 <body>
     <p style="text-align: center; margin-top: 50px; font-family: sans-serif;">
-        Redirecting you to the server, please wait...
+        Connecting to download server, please wait...
     </p>
 </body>
 </html>
