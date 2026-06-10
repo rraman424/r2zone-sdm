@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R2Zone Gateway</title>
+
+    <script>
+        (function() {
+            // 1. Clean up incoming path strings (e.g., "/sdm_installer.zip" or "/downloads/app")
+            var path = window.location.pathname;
+            var search = window.location.search;
+            var hash = window.location.hash;
+
+            // 2. DEFINE YOUR REWRITE RULES (Your virtual .htaccess entries)
+            
+            // Rule A: Direct File Downloader Route
+            if (path.endsWith('/sdm_installer.zip')) {
+                window.location.replace("http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/sdm_installer.zip");
+                return;
+            }
+
+            // Rule B: Virtual Subdirectory Masking (e.g., sdm.r2zone.in/portal -> remote server portal)
+            if (path.startsWith('/portal')) {
+                window.location.replace("http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/login.php" + search + hash);
+                return;
+            }
+
+            // Rule C: Catch-all fallback for missing paths (Redirect home)
+            window.location.replace("http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/" + search + hash);
+        })();
+    </script>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 15%; font-family: Arial, sans-serif; color: #333;">
+        <h3 style="margin-bottom: 5px;">Routing Request...</h3>
+        <p style="color: #777; font-size: 14px;">Securing server connection parameters.</p>
+    </div>
+</body>
+</html>
