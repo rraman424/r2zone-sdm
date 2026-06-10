@@ -6,30 +6,22 @@
     <title>R2Zone Gateway</title>
 
     <script>
-        (function() {
-            // 1. Clean up incoming path strings (e.g., "/sdm_installer.zip" or "/downloads/app")
-            var path = window.location.pathname;
-            var search = window.location.search;
-            var hash = window.location.hash;
+    (function() {
+        // 1. Capture the exact sub-path typed by the user (e.g., "/sdm_installer.zip" or "/any/other/file.php")
+        var requestedPath = window.location.pathname;
 
-            // 2. DEFINE YOUR REWRITE RULES (Your virtual .htaccess entries)
-            
-            // Rule A: Direct File Downloader Route
-            if (path.endsWith('/sdm_installer.zip')) {
-                window.location.replace("http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/sdm_installer.zip");
-                return;
-            }
+        // 2. Define your base destination URL (Leave out the trailing slash to prevent double slashes "//")
+        var targetBaseUrl = "http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM";
 
-            // Rule B: Virtual Subdirectory Masking (e.g., sdm.r2zone.in/portal -> remote server portal)
-            if (path.startsWith('/portal')) {
-                window.location.replace("http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/login.php" + search + hash);
-                return;
-            }
+        // 3. Catch query parameters (?key=value) and hashes (#section) safely
+        var search = window.location.search;
+        var hash = window.location.hash;
 
-            // Rule C: Catch-all fallback for missing paths (Redirect home)
-            window.location.replace("http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/" + search + hash);
-        })();
-    </script>
+        // 4. Instantly concatenate everything perfectly and forward the user
+        // Example: sdm.r2zone.in/anything -> http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/anything
+        window.location.replace(targetBaseUrl + requestedPath + search + hash);
+    })();
+</script>
 </head>
 <body>
     <div style="text-align: center; margin-top: 15%; font-family: Arial, sans-serif; color: #333;">
