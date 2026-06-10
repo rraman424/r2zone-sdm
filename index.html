@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <!-- <meta http-equiv="refresh" content="0; url=https://r2zonevns-001-site1.ktempurl.com/r2zone/sdm" /> -->
-    <title>Redirecting to SDM...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+
+    <script>
+        (function() {
+            // Get the current domain name the user typed
+            var currentHost = window.location.hostname.toLowerCase();
+            
+            // Get any extra path paths (e.g., /about or /login) to pass along
+            var currentPath = window.location.pathname + window.location.search + window.location.hash;
+       
+                window.location.href = "http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/" + currentPath;
+            
+        })();
+    </script>
 </head>
 <body>
-    <p>SDM, <a href="https://r2zonevns-001-site1.ktempurl.com/r2zone/sdm">click here</a>.</p>
+    <p style="text-align: center; margin-top: 50px; font-family: sans-serif;">
+        Redirecting you to the server, please wait...
+    </p>
 </body>
 </html>
