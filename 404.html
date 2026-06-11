@@ -1,32 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R2Zone Gateway</title>
-
+    <title>Router Gateway</title>
     <script>
-    (function() {
-        // 1. Capture the exact sub-path typed by the user (e.g., "/sdm_installer.zip" or "/any/other/file.php")
-        var requestedPath = window.location.pathname;
+        (function() {
+            // Your new temporary server root url (without trailing slash)
+            var newServerBase = "http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM";
+            
+            var path = window.location.pathname;
+            var search = window.location.search;
+            var hash = window.location.hash;
 
-        // 2. Define your base destination URL (Leave out the trailing slash to prevent double slashes "//")
-        var targetBaseUrl = "http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM";
+            // Combine them to make the exact target URL
+            var directTargetUrl = newServerBase + path + search + hash;
 
-        // 3. Catch query parameters (?key=value) and hashes (#section) safely
-        var search = window.location.search;
-        var hash = window.location.hash;
+            // Check the User-Agent to see who is calling this URL
+            var userAgent = navigator.userAgent.toLowerCase();
 
-        // 4. Instantly concatenate everything perfectly and forward the user
-        // Example: sdm.r2zone.in/anything -> http://r2zonevns-001-site1.ktempurl.com/r2zone/SDM/anything
-        window.location.replace(targetBaseUrl + requestedPath + search + hash);
-    })();
-</script>
+            // Flutter's HTTP package always includes "dart" or "flutter" in its User-Agent string
+            if (userAgent.includes('dart') || userAgent.includes('flutter')) {
+                // Force the page to display raw JSON text so the Flutter App can parse it safely
+                document.open("application/json");
+                var jsonResponse = {
+                    "status": "redirect",
+                    "msg": "Use temporary origin server link directly",
+                    "target_url": directTargetUrl
+                };
+                document.write(JSON.stringify(jsonResponse));
+                document.close();
+            } else {
+                // If it's a normal web browser user, run your standard browser routing redirect instantly
+                window.location.replace(directTargetUrl);
+            }
+        })();
+    </script>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 15%; font-family: Arial, sans-serif; color: #333;">
-        <h3 style="margin-bottom: 5px;">Routing Request...</h3>
-        <p style="color: #777; font-size: 14px;">Securing server connection parameters.</p>
+    <div style="text-align: center; margin-top: 15%; font-family: sans-serif; color: #666;">
+        <p>Routing secure gateway parameters...</p>
     </div>
 </body>
 </html>
